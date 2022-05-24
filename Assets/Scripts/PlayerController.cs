@@ -6,119 +6,119 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed; //this will appear as input in unity
+    void Awake(){
+
+    }
+    // Start is called before the first frame update
+
+    public float speed;
     public float maxSpeed = 10;
+
     public float upSpeed = 20;
-
     private Rigidbody2D marioBody;
-
-    private float moveHorizontal;
+    private SpriteRenderer marioSprite;
+    private bool faceRightSate = true;
 
     private bool onGroundState = true;
 
-    private SpriteRenderer marioSprite;
-    private bool faceRightState = true;
-    
-    // for scoring
     public Transform enemyLocation;
     public Text scoreText;
     private int score = 0;
     private bool countScoreState = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        // Set to be 30 FPS
-        Application.targetFrameRate =  30;
-        marioBody = GetComponent<Rigidbody2D>(); //return RIgidbody2D object
+        //set to be 30 FPS
+        Application.targetFrameRate = 30;
+        marioBody = GetComponent<Rigidbody2D>();
 
-        // Instantiate the MarioSprite
+        //init sprite render of mario object
         marioSprite = GetComponent<SpriteRenderer>();
     }
 
-    //  use this instead of Update() for physics engine
-    void  FixedUpdate()
-    {
-        // dynamic rigidbody
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(moveHorizontal) > 0){
-            Vector2 movement = new Vector2(moveHorizontal, 0);
-            if (marioBody.velocity.magnitude < maxSpeed)
-                    marioBody.AddForce(movement * speed);
+//called when collision happened with the Ground
+    void OnCollisionEnter2D(Collision2D col) {
+        if(col.gameObject.CompareTag("Ground")){
+            onGroundState = true;
+            //Debug.Log("onGroundState is: "+ onGroundState);
+            countScoreState = false;
+            scoreText.text = "Score: " + score.ToString();
         }
+    }
 
-        if (Input.GetKeyUp("a") || Input.GetKeyUp("d")){
-            // stop
+//called when mario collide with enemy
+     void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Enemy")){
+            Debug.Log("Collided with Gomba!");
+            //this line go back to menu
+            //Application.LoadLevel(0);
+
+            //get the UI layer back: button, filter
+            SceneManager.LoadScene("SampleScene");
+
+        }
+    }
+
+
+    //event callback 
+    //things to do with physics engine
+    void FixedUpdate(){
+        //force will result in sliding effect
+/*      float moveHorizontal = Input.GetAxis("Horizontal");
+        Vector2 movement = new Vector2(moveHorizontal,0);
+        marioBody.AddForce(movement*speed); */
+
+        //stop moving object immediately when key is up
+        if (Input.GetKeyUp("a")||Input.GetKeyUp("d")){
             marioBody.velocity = Vector2.zero;
         }
-
-        if (Input.GetKeyDown("space") && onGroundState){
-          marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
-          onGroundState = false;
-          countScoreState = true; //check if Gomba is underneath
-
-          Debug.Log("Mario is jumping");
+        //dynamic rigidbody
+        
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        if(Mathf.Abs(moveHorizontal)>0){
+            Vector2 movement = new Vector2(moveHorizontal,0);
+            if(marioBody.velocity.magnitude <maxSpeed){
+                marioBody.AddForce(movement*speed);
+            }
         }
-    }
-    
-    
-    // called when mario lands on the ground
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Ground"))
-        {
-            //Debug.Log("onGroundState is "+onGroundState);
-            onGroundState = true; // back on ground
-            countScoreState = false; // reset score state
-            scoreText.text = "Score: " + score.ToString();
-        };
+        //make object jump when spacebar pressed
+        //sample code
+        if (Input.GetKeyDown("space") && onGroundState==true){
+            marioBody.AddForce(Vector2.up*upSpeed, ForceMode2D.Impulse);
+            onGroundState = false;
+            //Debug.Log("Mario is jumping");
+            //Debug.Log("onGroundState is: "+ onGroundState);
+            countScoreState = true; 
+        }
+
     }
 
-    // collide with enemy (Trigger)
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Collided with Gomba!");
-            SceneManager.LoadScene("mario");
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        // toggle state
-        if (Input.GetKeyDown("a") && faceRightState){
-            faceRightState = false;
+        //set which side mario is facing
+        if(Input.GetKeyDown("a")&& faceRightSate==true){
+            faceRightSate = false;
             marioSprite.flipX = true;
         }
-
-        if (Input.GetKeyDown("d") && !faceRightState){
-            faceRightState = true;
+        if(Input.GetKeyDown("d")&& faceRightSate==false){
+            faceRightSate = true;
             marioSprite.flipX = false;
         }
 
-        // when jumping, and Gomba is near Mario and we haven't registered our score
 
-        Debug.Log("onGroundState is "+onGroundState+ " countscorestate is "+countScoreState);
-        if (!onGroundState && countScoreState)
-        {
-            Debug.Log("distance between objects: " +Mathf.Abs(transform.position.x - enemyLocation.position.x));
-
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-            {
-                Debug.Log("distance <0.5f");
-                countScoreState = false; 
-                score++;
-                Debug.Log("current score: "+ score);
-            }
-            else{
-                Debug.Log("distance >=0.5f");
+        //when jumping, and Gomba is near Mario and we havent register score
+        if (onGroundState==false && countScoreState==true){
+            if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
+                countScoreState = false;
+                score ++;
+                Debug.Log(score);
             }
         }
 
-
-
-
+        
     }
-}
+
+}    
