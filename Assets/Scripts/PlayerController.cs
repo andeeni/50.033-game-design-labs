@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float maxSpeed = 10;
 
-    public float upSpeed = 20;
+    public float upSpeed = 25;
     private Rigidbody2D marioBody;
     private SpriteRenderer marioSprite;
     private bool faceRightSate = true;
@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     private int score = 0;
     private bool countScoreState = false;
 
+    private Animator marioAnimator;
+
+    private AudioSource marioAudio;
+
 
     void Start()
     {
@@ -35,15 +39,33 @@ public class PlayerController : MonoBehaviour
 
         //init sprite render of mario object
         marioSprite = GetComponent<SpriteRenderer>();
+
+        //reference to current animator
+        marioAnimator = GetComponent<Animator>();
+
+        //reference to audio
+        marioAudio = GetComponent<AudioSource>();
     }
 
 //called when collision happened with the Ground
     void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.CompareTag("Ground")){
+        if(col.gameObject.CompareTag("Ground") && onGroundState==false){
             onGroundState = true;
+            marioAnimator.SetBool("onGround", onGroundState);
             //Debug.Log("onGroundState is: "+ onGroundState);
             countScoreState = false;
             scoreText.text = "Score: " + score.ToString();
+        }
+
+        else if (col.gameObject.CompareTag("Obstacles")){
+            if(Mathf.Abs(marioBody.velocity.y)<0.01f){
+                //ResetMarioGround();
+                //ResetMarioScore();
+                onGroundState = true;
+                marioAnimator.SetBool("onGround", onGroundState);
+                countScoreState = false;
+                scoreText.text = "Score: " + score.ToString();
+            }
         }
     }
 
@@ -58,6 +80,11 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
 
         }
+
+    }
+
+    void PlayJumpSound(){
+        marioAudio.PlayOneShot(marioAudio.clip);
     }
 
 
@@ -90,6 +117,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Mario is jumping");
             //Debug.Log("onGroundState is: "+ onGroundState);
             countScoreState = true; 
+            marioAnimator.SetBool("onGround", onGroundState);
         }
 
     }
@@ -98,17 +126,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //set which side mario is facing
+        //to update xSpeed for animation to mario's current speed along the x
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
+        
         if(Input.GetKeyDown("a")&& faceRightSate==true){
+            //set which side mario is facing
             faceRightSate = false;
             marioSprite.flipX = true;
+            //display skid animation
+            if(Mathf.Abs(marioBody.velocity.x)>1.0){
+                marioAnimator.SetTrigger("onSkid");
+            }
         }
         if(Input.GetKeyDown("d")&& faceRightSate==false){
+            //set which side mario is facing
             faceRightSate = true;
             marioSprite.flipX = false;
+            //display skid animation
+            if(Mathf.Abs(marioBody.velocity.x)>1.0){
+                marioAnimator.SetTrigger("onSkid");
+            }
         }
 
-
+        //to update onGround bool for animation
+        marioAnimator.SetBool("onGround", onGroundState);
         //when jumping, and Gomba is near Mario and we havent register score
         if (onGroundState==false && countScoreState==true){
             if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
