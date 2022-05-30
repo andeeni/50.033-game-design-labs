@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5210387844876756076}
   - component: {fileID: 5210387844876756077}
   - component: {fileID: 5210387844876756074}
+  - component: {fileID: 9088963348849797177}
   m_Layer: 7
   m_Name: MushroomOrange
   m_TagString: Untagged
@@ -133,3 +134,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &9088963348849797177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210387844876756075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e201c9d8298cb1548961bc9e29d50a47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidBody: {fileID: 5210387844876756077}
