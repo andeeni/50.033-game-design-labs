@@ -139,14 +139,5 @@ public class PlayerController : MonoBehaviour
         // To handle Mario’s jumping state, set the animator’s onGround parameter to match the current onGroundState value whenever it’s changed in the script
         marioAnimator.SetBool("onGround", onGroundState);
 
-        //when jumping, and Gomba is near Mario and we havent register score
-        // if (onGroundState==false && countScoreState==true){
-        //     if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
-        //         countScoreState = false;
-        //         score ++;
-        //         Debug.Log(score);
-        //     }
-        // }
-
     }
 }    

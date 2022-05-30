@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Wall
   - Obstacles
+  - Pipe
   layers:
   - Default
   - TransparentFX
