@@ -21,11 +21,14 @@ public class PlayerController : MonoBehaviour
 
     private bool onGroundState = true;
 
-    public Transform enemyLocation;
-    public Text scoreText;
-    private int score = 0;
+    // public Transform enemyLocation;
+    // public Text scoreText;
+    // private int score = 0;
     private bool countScoreState = false;
 
+    private  Animator marioAnimator;
+
+    private AudioSource marioAudio;
 
     void Start()
     {
@@ -35,6 +38,10 @@ public class PlayerController : MonoBehaviour
 
         //init sprite render of mario object
         marioSprite = GetComponent<SpriteRenderer>();
+
+        marioAnimator  =  GetComponent<Animator>();
+
+        marioAudio = GetComponent<AudioSource>();
     }
 
 //called when collision happened with the Ground
@@ -42,8 +49,15 @@ public class PlayerController : MonoBehaviour
         if(col.gameObject.CompareTag("Ground")){
             onGroundState = true;
             //Debug.Log("onGroundState is: "+ onGroundState);
+            marioAnimator.SetBool("onGround", onGroundState);
             countScoreState = false;
-            scoreText.text = "Score: " + score.ToString();
+            // scoreText.text = "Score: " + score.ToString();
+        };
+
+        if(col.gameObject.CompareTag("Obstacles") && Mathf.Abs(marioBody.velocity.y) < 0.01f){
+            //reset
+            onGroundState = true;
+            marioAnimator.SetBool("onGround", onGroundState);
         }
     }
 
@@ -58,6 +72,10 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
 
         }
+    }
+
+    void  PlayJumpSound(){
+        marioAudio.PlayOneShot(marioAudio.clip);
     }
 
 
@@ -102,23 +120,33 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown("a")&& faceRightSate==true){
             faceRightSate = false;
             marioSprite.flipX = true;
+            //enable the onSkid trigger
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+               marioAnimator.SetTrigger("onSkid"); 
+            }
         }
         if(Input.GetKeyDown("d")&& faceRightSate==false){
             faceRightSate = true;
             marioSprite.flipX = false;
-        }
-
-
-        //when jumping, and Gomba is near Mario and we havent register score
-        if (onGroundState==false && countScoreState==true){
-            if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
-                countScoreState = false;
-                score ++;
-                Debug.Log(score);
+            //enable the onSkid trigger
+            if (Mathf.Abs(marioBody.velocity.x) >  1.0) {
+               marioAnimator.SetTrigger("onSkid"); 
             }
         }
 
-        
-    }
+        // always update the xSpeed parameter to match Mario’s current speed along the x-axis.
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
+        // To handle Mario’s jumping state, set the animator’s onGround parameter to match the current onGroundState value whenever it’s changed in the script
+        marioAnimator.SetBool("onGround", onGroundState);
 
+        //when jumping, and Gomba is near Mario and we havent register score
+        // if (onGroundState==false && countScoreState==true){
+        //     if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
+        //         countScoreState = false;
+        //         score ++;
+        //         Debug.Log(score);
+        //     }
+        // }
+
+    }
 }    
