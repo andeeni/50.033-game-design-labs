@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MushroomController : MonoBehaviour
 {
-    public  Rigidbody2D rigidBody;
-    private float velocity = 4.0f;
-    private int direction = 1;
+    public  Rigidbody2D rigidBody; 
+    private float velocity = 4.0f; // mushroom moves at constant speed
+    private int direction = 1; // to be randomised to either or -1
     private bool isMoving = true;
+
+    
     
 
     // Start is called before the first frame update
@@ -17,6 +19,12 @@ public class MushroomController : MonoBehaviour
 
         // upwards force (Vector2.up * 20) to be applied on the mushroom is automatically set as the amount of TOTAL force to be applied over ONE second (50 physics frame).
         rigidBody.AddForce(Vector2.up  *  20, ForceMode2D.Impulse);
+
+        var val = Random.value;
+        if(val < 0.5f)
+            direction = 1;
+        else
+            direction = -1;
     }
 
 
