@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class MushroomController : MonoBehaviour
 {
-    private float speed =5.0f;
+    public  Rigidbody2D rigidBody; 
+    private float velocity = 4.0f; // mushroom moves at constant speed
+    private int direction = 1; // to be randomised to either or -1
+    private bool isMoving = true;
 
-    private Vector2 velocity;
 
-    private float originalY;
-    private Vector2 currentPosition;
-    private int  moveRight = 1;
-    private Rigidbody2D mushroom;
-
-    private bool onGroundState = false;
+    //private bool onGroundState = false;
 
 
 
@@ -21,57 +18,45 @@ public class MushroomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        originalY = transform.position.y;
-        
-        mushroom = GetComponent<Rigidbody2D>();
-        currentPosition = mushroom.transform.position;
+        rigidBody = GetComponent<Rigidbody2D>();
 
-        mushroom.AddForce(Vector2.up*5, ForceMode2D.Impulse);
+        // upwards force (Vector2.up * 20) to be applied on the mushroom is automatically set as the amount of TOTAL force to be applied over ONE second (50 physics frame).
+        rigidBody.AddForce(Vector2.up  *  20, ForceMode2D.Impulse);
 
-        ComputeVelocity();
-        
-        //Random rnd = new Random();
-        //currentDirection = rnd.Next(-1,1);
-        
+        var val = Random.value;
+        if(val < 0.5f)
+            direction = 1;
+        else
+            direction = -1;
+    }
 
+        // TODO: randomly move to the left or to the right at a constant speed
+    private void FixedUpdate()
+    {
+        if (isMoving)
+        {
+            rigidBody.velocity = new Vector2(velocity * direction, rigidBody.velocity.y);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.CompareTag("Obstacles")){
-            ComputeVelocity();
-            moveMushroom();
+        // TODO: change direction when colliding with obstacles
+        if (col.gameObject.CompareTag("Tubes") ){
+            direction = direction * (-1);
         }
-        else if (col.gameObject.CompareTag("Tubes")){
-            moveRight*=-1;
-            ComputeVelocity();
-            moveMushroom();
-        }
-        else if (col.gameObject.CompareTag("Player") ){
-            //mushroom.velocity = Vector2.zero;
-            speed =0f;
+
+        // TODO: stop moving when it collides with Mario 
+        if (col.gameObject.CompareTag("Player") ){
+            isMoving = false;
         }
     }
 
-    void ComputeVelocity(){
-        velocity = new Vector2((moveRight)*speed, 0);
-    }
-    void moveMushroom(){
-        mushroom.MovePosition(mushroom.position+velocity*Time.fixedDeltaTime);
+    void  OnBecameInvisible(){
+        Destroy(gameObject);	
     }
 
     // Update is called once per frame
     void Update()
     {
-        //check if mushroom is in air
-        if(Mathf.Abs( originalY- mushroom.position.y )!=0){
-            onGroundState = false;
-        }
-        ComputeVelocity();
-        moveMushroom();
-
-
-
-
-        
     }
 }
