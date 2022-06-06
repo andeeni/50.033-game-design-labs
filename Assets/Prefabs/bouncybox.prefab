@@ -89,7 +89,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7a064d30465025948946492c22a805a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 6386314858936006966}
   springJoint: {fileID: 6386314858936006967}
-  consummablePrefab: {fileID: 0}
+  consummablePrefab: {fileID: 4029728543088064192, guid: 2f540293558480a45a28b95b4f09eeca, type: 3}
   spriteRenderer: {fileID: 6386314858936006952}
   usedQuestionBox: {fileID: 21300054, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
 --- !u!1 &6386314859756432560
