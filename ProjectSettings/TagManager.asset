@@ -19,8 +19,8 @@ TagManager:
   - UI
   - Background
   - Player
-  - 
-  - 
+  - Forest
+  - Cloud
   - 
   - 
   - 
@@ -44,8 +44,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Forest
+    uniqueID: 1332973333
+    locked: 0
   - name: Background
     uniqueID: 3755840435
+    locked: 0
+  - name: Cloud
+    uniqueID: 2096026253
     locked: 0
   - name: Default
     uniqueID: 0
