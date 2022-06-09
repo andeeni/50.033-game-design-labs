@@ -49,11 +49,10 @@ public class QuestionBoxController : MonoBehaviour
         return  Mathf.Abs(rigidBody.velocity.magnitude)<0.01;
     }
 
-    // returns control to Unity until condition happens
     IEnumerator  DisableHittable(){
         // if box is still moving
         if (!ObjectMovedAndStopped()){ 
-            yield  return  new  WaitUntil(() =>  ObjectMovedAndStopped());
+            yield  return  new  WaitUntil(() =>  ObjectMovedAndStopped()); // returns control to Unity until condition happens
         }
         // here, return control to unity
         spriteRenderer.sprite  =  usedQuestionBox; // change sprite to be "used-box" sprite

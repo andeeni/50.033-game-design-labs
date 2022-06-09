@@ -18,6 +18,7 @@ public class MushroomController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
 
         // upwards force (Vector2.up * 20) to be applied on the mushroom is automatically set as the amount of TOTAL force to be applied over ONE second (50 physics frame).
+        // Impulse means apply all now
         rigidBody.AddForce(Vector2.up  *  20, ForceMode2D.Impulse);
 
         var val = Random.value;
