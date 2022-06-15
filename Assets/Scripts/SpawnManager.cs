@@ -18,8 +18,8 @@ public class SpawnManager : MonoBehaviour
         for (int k = 0; k < gombaEnemyCount; k++)
             spawnFromPooler(ObjectType.gombaEnemy);
 
-        // subscribe
-        //GameManager.OnEnemyDeath += spawnNewEnemy;
+        // subscribe to event
+        GameManager.OnEnemyDeath += spawnNewEnemy;
     }
 
     void  spawnFromPooler(ObjectType i){

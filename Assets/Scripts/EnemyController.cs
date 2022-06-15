@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public  GameConstants gameConstants;
 	private  int moveRight;
 	private  float originalX;
-	private  Vector2 velocity;
+	private  Vector2 velocity ;
 	private  Rigidbody2D enemyBody;
 	
 
