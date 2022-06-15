@@ -45,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
         //reference to audio
         marioAudio = GetComponent<AudioSource>();
+
+        // subscribe to event
+        GameManager.OnPlayerDeath  +=  PlayerDiesSequence;
     }
 
 //called when collision happened with the Ground
@@ -160,6 +163,13 @@ public class PlayerController : MonoBehaviour
         }
 
         
+    }
+
+    void  PlayerDiesSequence(){
+        // Mario dies
+        Debug.Log("Mario dies");
+        // do whatever you want here, animate etc
+        // ...
     }
 
 }    
