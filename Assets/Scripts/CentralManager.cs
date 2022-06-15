@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class CentralManager : MonoBehaviour
 {
+    public  static  CentralManager centralManagerInstance;
+
+    // add reference to GameManager
     public  GameObject gameManagerObject;
 	private  GameManager gameManager;
-	public  static  CentralManager centralManagerInstance;
+	
+
+    // add reference to PowerupManager
+    public  GameObject powerupManagerObject;
+    private  PowerupManager powerUpManager;
 	
 	void  Awake(){
 		centralManagerInstance  =  this;
@@ -15,6 +22,7 @@ public class CentralManager : MonoBehaviour
 	void  Start()
 	{
 		gameManager  =  gameManagerObject.GetComponent<GameManager>();
+        powerUpManager = powerupManagerObject.GetComponent<PowerupManager>();
 	}
 
 	public  void  increaseScore(){
@@ -24,5 +32,15 @@ public class CentralManager : MonoBehaviour
     // player collides with enemy sideways
     public  void  damagePlayer(){
         gameManager.damagePlayer();
+    }
+
+
+    // called by RedMushroom.cs and OrangeMushroom.cs
+    public  void  consumePowerup(KeyCode k, GameObject g){
+        powerUpManager.consumePowerup(k,g);
+    }
+    // called by PlayerController.cs in Update()
+    public  void  addPowerup(Texture t, int i, ConsumableInterface c){
+        powerUpManager.addPowerup(t, i, c); 
     }
 }

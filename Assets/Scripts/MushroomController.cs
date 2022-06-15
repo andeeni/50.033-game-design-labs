@@ -13,8 +13,6 @@ public class MushroomController : MonoBehaviour
     //private bool onGroundState = false;
 
 
-
-
     // Start is called before the first frame update
     void Start()
     {   
@@ -48,15 +46,13 @@ public class MushroomController : MonoBehaviour
         // TODO: stop moving when it collides with Mario 
         if (col.gameObject.CompareTag("Player") ){
             isMoving = false;
+
         }
     }
 
-    void  OnBecameInvisible(){
-        Destroy(gameObject);	
-    }
+    // void  OnBecameInvisible(){
+    //     Destroy(gameObject);	
+    // }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 }

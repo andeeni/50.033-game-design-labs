@@ -6,15 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    void Awake(){
-
-    }
-    // Start is called before the first frame update
 
     public float speed;
     public float maxSpeed = 10;
 
     public float upSpeed = 25;
+
     private Rigidbody2D marioBody;
     private SpriteRenderer marioSprite;
     private bool faceRightSate = true;
@@ -72,19 +69,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-//called when mario collide with enemy
-     void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.CompareTag("Enemy")){
-            Debug.Log("Collided with Gomba!");
-            //this line go back to menu
-            //Application.LoadLevel(0);
+// //called when mario collide with enemy
+//      void OnTriggerEnter2D(Collider2D other) {
+//         if(other.gameObject.CompareTag("Enemy")){
+//             Debug.Log("Collided with Gomba!");
+//             //this line go back to menu
+//             //Application.LoadLevel(0);
 
-            //get the UI layer back: button, filter
-            SceneManager.LoadScene("SampleScene");
+//             //get the UI layer back: button, filter
+//             SceneManager.LoadScene("SampleScene");
 
-        }
+//         }
 
-    }
+//     }
 
     void PlayJumpSound(){
         marioAudio.PlayOneShot(marioAudio.clip);
@@ -162,6 +159,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+        
+        if (Input.GetKeyDown("z")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
+        }
+
+        if (Input.GetKeyDown("x")){
+            CentralManager.centralManagerInstance.consumePowerup(KeyCode.X,this.gameObject);
+        }
         
     }
 
@@ -170,6 +176,20 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Mario dies");
         // do whatever you want here, animate etc
         // ...
+        StartCoroutine(dead());
+        this.gameObject.transform.GetComponent<BoxCollider2D>().enabled = false;
+
     }
+
+    IEnumerator dead()
+    {
+        for (int i = 0; i < 2; i++){
+			this.transform.position  =  new  Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z);
+			yield  return  null;
+		}
+        
+		yield  break;
+    }
+
 
 }    

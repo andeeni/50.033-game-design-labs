@@ -9,7 +9,8 @@ public  class GameConstants : ScriptableObject
 
     public float maxOffset = 5.0f;
     public float enemyPatroltime = 2.0f;
-    public int groundSurface = -1;
+
+    public int groundSurface = -1; // y position to spawn enemies
 
     // for Scoring system
     int currentScore;
@@ -37,16 +38,4 @@ public  class GameConstants : ScriptableObject
     // for testing
     public  int testValue;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

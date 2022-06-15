@@ -47,7 +47,6 @@ public class EnemyController : MonoBehaviour
 		if (other.gameObject.tag  ==  "Player"){
 			// check if collides on top
 			float yoffset = (other.transform.position.y  -  this.transform.position.y);
-
             //  check if the player’s y location is higher than the enemy’s (i.e Player is stomping the enemy from above)
 			if (yoffset  >  0.75f){
 				KillSelf();
@@ -89,6 +88,9 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Enemy killed Mario");
         // do whatever you want here, animate etc
         // ...
+
+		InvokeRepeating("FlipXpos", 0, 0.2f);
+
     }
 
 	void  Update()
@@ -104,5 +106,12 @@ public class EnemyController : MonoBehaviour
 			ComputeVelocity();
 			MoveEnemy();
 		}
+	}
+
+
+    private void OnDestroy()
+    {
+		GameManager.OnPlayerDeath -= EnemyRejoice;
+
 	}
 }
