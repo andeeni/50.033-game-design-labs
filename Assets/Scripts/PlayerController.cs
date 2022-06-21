@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
     public float maxSpeed = 10;
-
     public float upSpeed = 25;
 
     private Rigidbody2D marioBody;
@@ -17,14 +16,16 @@ public class PlayerController : MonoBehaviour
     private bool faceRightSate = true;
 
     private bool onGroundState = true;
+    private float moveHorizontal;
 
-    public Transform enemyLocation;
+    // public Transform enemyLocation;
     public Text scoreText;
-    private int score = 0;
+    // private int score = 0;
     private bool countScoreState = false;
+    private Vector2 enemyPos;
+
 
     private Animator marioAnimator;
-
     private AudioSource marioAudio;
 
 
@@ -48,23 +49,23 @@ public class PlayerController : MonoBehaviour
     }
 
 //called when collision happened with the Ground
-    void OnCollisionEnter2D(Collision2D col) {
-        if(col.gameObject.CompareTag("Ground") && onGroundState==false){
+    void OnCollisionEnter2D(Collision2D col) 
+    {
+        if(col.gameObject.CompareTag("Ground"))
+        {
             onGroundState = true;
             marioAnimator.SetBool("onGround", onGroundState);
             //Debug.Log("onGroundState is: "+ onGroundState);
             countScoreState = false;
-            scoreText.text = "Score: " + score.ToString();
         }
 
-        else if (col.gameObject.CompareTag("Obstacles")){
+        else if (col.gameObject.CompareTag("Obstacles"))
+        {
             if(Mathf.Abs(marioBody.velocity.y)<0.01f){
                 //ResetMarioGround();
                 //ResetMarioScore();
                 onGroundState = true;
                 marioAnimator.SetBool("onGround", onGroundState);
-                countScoreState = false;
-                scoreText.text = "Score: " + score.ToString();
             }
         }
     }
@@ -98,11 +99,11 @@ public class PlayerController : MonoBehaviour
 
         //stop moving object immediately when key is up
         if (Input.GetKeyUp("a")||Input.GetKeyUp("d")){
-            marioBody.velocity = Vector2.zero;
+            marioBody.velocity = new Vector2(0, marioBody.velocity.y);
         }
         //dynamic rigidbody
         
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        moveHorizontal = Input.GetAxis("Horizontal");
         if(Mathf.Abs(moveHorizontal)>0){
             Vector2 movement = new Vector2(moveHorizontal,0);
             if(marioBody.velocity.magnitude <maxSpeed){
@@ -116,8 +117,8 @@ public class PlayerController : MonoBehaviour
             onGroundState = false;
             //Debug.Log("Mario is jumping");
             //Debug.Log("onGroundState is: "+ onGroundState);
-            countScoreState = true; 
             marioAnimator.SetBool("onGround", onGroundState);
+            countScoreState = true; 
         }
 
     }
@@ -126,8 +127,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //to update xSpeed for animation to mario's current speed along the x
-        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
         
         if(Input.GetKeyDown("a")&& faceRightSate==true){
             //set which side mario is facing
@@ -149,17 +148,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //to update onGround bool for animation
-        marioAnimator.SetBool("onGround", onGroundState);
+        // marioAnimator.SetBool("onGround", onGroundState);
         //when jumping, and Gomba is near Mario and we havent register score
-        if (onGroundState==false && countScoreState==true){
-            if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
-                countScoreState = false;
-                score ++;
-                Debug.Log(score);
-            }
-        }
+        // if (onGroundState==false && countScoreState==true){
+        //     if(Mathf.Abs(transform.position.x - enemyLocation.position.x)<0.5f){
+        //         countScoreState = false;
+        //         score ++;
+        //         Debug.Log(score);
+        //     }
+        // }
 
-
+        marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.velocity.x));
         
         if (Input.GetKeyDown("z")){
             CentralManager.centralManagerInstance.consumePowerup(KeyCode.Z,this.gameObject);
@@ -176,20 +175,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Mario dies");
         // do whatever you want here, animate etc
         // ...
-        StartCoroutine(dead());
-        this.gameObject.transform.GetComponent<BoxCollider2D>().enabled = false;
-
-    }
-
-    IEnumerator dead()
-    {
-        for (int i = 0; i < 2; i++){
-			this.transform.position  =  new  Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z);
-			yield  return  null;
-		}
         
-		yield  break;
-    }
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+        // here - try change y
+        Vector2 direction =  new  Vector2(0, 25);
+        marioBody.AddForce(direction, ForceMode2D.Impulse);
+        GetComponent<Collider2D>().enabled  =  false;
 
+    }
 
 }    

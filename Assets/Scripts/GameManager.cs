@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Text score;
+    // public  TextMeshProUGUI score;
+    
 	private  int playerScore =  0;
 
     // delegate - ref pointer to a method

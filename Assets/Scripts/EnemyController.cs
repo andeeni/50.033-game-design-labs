@@ -11,13 +11,14 @@ public class EnemyController : MonoBehaviour
 	private  float originalX;
 	private  Vector2 velocity ;
 	private  Rigidbody2D enemyBody;
-	
+	private SpriteRenderer enemySprite;
 
 
     // Start is called before the first frame update
     void  Start()
 	{
 		enemyBody  =  GetComponent<Rigidbody2D>();
+		enemySprite = GetComponent<SpriteRenderer>();
 		
 		// get the starting position
 		originalX  =  transform.position.x;
@@ -30,6 +31,8 @@ public class EnemyController : MonoBehaviour
 
         // subscribe to player event
         GameManager.OnPlayerDeath  +=  EnemyRejoice;    
+
+		gameConstants.enemyRejoice = false;
 	}
 	
 	void  ComputeVelocity()
@@ -89,12 +92,18 @@ public class EnemyController : MonoBehaviour
         // do whatever you want here, animate etc
         // ...
 
-		InvokeRepeating("FlipXpos", 0, 0.2f);
+		gameConstants.enemyRejoice = true;
 
     }
 
 	void  Update()
 	{
+		if (gameConstants.enemyRejoice == true)
+		{
+        enemySprite.flipX = !enemySprite.flipX;
+        velocity = new Vector2(0,0);
+      	}
+
 		if (Mathf.Abs(enemyBody.position.x  -  originalX) <  gameConstants.maxOffset)
 		{// move goomba
 			MoveEnemy();

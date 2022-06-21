@@ -22,8 +22,14 @@ public  class RedMushroom : MonoBehaviour, ConsumableInterface
     {
         if (col.gameObject.CompareTag("Player")){
             // update UI
-            CentralManager.centralManagerInstance.addPowerup(t, 0, this);
-            GetComponent<Collider2D>().enabled  =  false;
+            CentralManager.centralManagerInstance.addPowerup(t, 1, this);
+
+            // GetComponent<Collider2D>().enabled  =  false;
+
+			// here - try changing y
+			this.transform.position  =  new  Vector3(this.transform.position.x, -7, this.transform.position.z);
+        	GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+
         }
     }
 }

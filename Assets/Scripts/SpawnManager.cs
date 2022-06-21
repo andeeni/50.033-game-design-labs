@@ -5,8 +5,9 @@ using UnityEngine;
 //  obtain objects from pool
 public class SpawnManager : MonoBehaviour
 {   
+    public GameConstants gameConstants;
 
-    public int greenEnemyCount = 3;
+    public int greenEnemyCount = 2;
     public int gombaEnemyCount = 0;
 
     // Start is called before the first frame update
@@ -19,7 +20,15 @@ public class SpawnManager : MonoBehaviour
             spawnFromPooler(ObjectType.gombaEnemy);
 
         // subscribe to event
-        GameManager.OnEnemyDeath += spawnNewEnemy;
+        GameManager.OnEnemyDeath += EnemySpawnSequence;
+    }
+
+    void  Awake()
+    {
+        // spawn two gombaEnemy
+
+        // for (int j =  0; j  <  2; j++)
+        //     spawnFromPooler(ObjectType.greenEnemy);
     }
 
     void  spawnFromPooler(ObjectType i){
@@ -35,27 +44,17 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-
-    public void spawnNewEnemy()
-    {
-
-        ObjectType i = Random.Range(0, 2) == 0 ? ObjectType.gombaEnemy : ObjectType.greenEnemy;
-        spawnFromPooler(i);
-
+    void EnemySpawnSequence(){
+        ObjectType enemyType =  Random.Range(0, 2) ==  0  ?  ObjectType.gombaEnemy  :  ObjectType.greenEnemy;
+        spawnFromPooler(enemyType);
     }
 
-    // void  Awake()
+    // public void spawnNewEnemy()
     // {
-    //     // spawn two gombaEnemy
-    //     for (int j =  0; j  <  2; j++)
-    //         spawnFromPooler(ObjectType.gombaEnemy);
+
+    //     ObjectType i = Random.Range(0, 2) == 0 ? ObjectType.gombaEnemy : ObjectType.greenEnemy;
+    //     spawnFromPooler(i);
     // }
 
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

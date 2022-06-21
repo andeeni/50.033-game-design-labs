@@ -12,6 +12,8 @@ public  class GameConstants : ScriptableObject
 
     public int groundSurface = -1; // y position to spawn enemies
 
+    public bool enemyRejoice = false;
+
     // for Scoring system
     int currentScore;
     int currentPlayerHealth;

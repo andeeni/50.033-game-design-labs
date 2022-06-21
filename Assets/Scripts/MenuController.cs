@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class MenuController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     void Awake() {
         Time.timeScale = 0.0f;
@@ -25,11 +20,5 @@ public class MenuController : MonoBehaviour
                 Time.timeScale = 1.0f;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

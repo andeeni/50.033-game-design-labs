@@ -12,12 +12,6 @@ public class QuestionBoxController : MonoBehaviour
     public  Sprite usedQuestionBox; // the sprite that indicates empty box instead of a question mark
     private bool hit =  false;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     void  OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Player") &&  !hit){
@@ -47,11 +41,5 @@ public class QuestionBoxController : MonoBehaviour
         //reset box position
         this.transform.localPosition  =  Vector3.zero;
         springJoint.enabled  =  false; // disable spring
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

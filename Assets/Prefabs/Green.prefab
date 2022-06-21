@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4017493895306140134}
   - component: {fileID: 7749545708688670606}
   - component: {fileID: -6721682520684650889}
-  - component: {fileID: -305134837541013466}
   m_Layer: 0
   m_Name: Green
   m_TagString: Enemy
@@ -148,23 +147,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConstants: {fileID: 11400000, guid: 6fa88d922b915d74d8440c59c0dc3a04, type: 2}
---- !u!95 &-305134837541013466
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4392749275482135525}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b03ef6ee13f6c024297fb38a2135559e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

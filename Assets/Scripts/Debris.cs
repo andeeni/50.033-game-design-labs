@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Debris : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    // Update is called once per frame
 
     private  Rigidbody2D rigidBody;
     private  Vector3 scaler;
@@ -18,13 +15,6 @@ public class Debris : MonoBehaviour
         rigidBody  =  GetComponent<Rigidbody2D>();
         StartCoroutine("ScaleOut");
     }
-
-
-    void Update()
-    {
-        
-    }
-
 
 
     IEnumerator  ScaleOut(){

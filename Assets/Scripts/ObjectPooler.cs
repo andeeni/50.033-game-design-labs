@@ -2,11 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public  enum ObjectType{
+	gombaEnemy =  0,
+	greenEnemy =  1
+}
+
 public class ObjectPooler : MonoBehaviour
 {
     public  List<ObjectPoolItem> itemsToPool; // types of different object to pool
     public  List<ExistingPoolItem> pooledObjects; // a list of all objects in the pool, of all types
     public static ObjectPooler SharedInstance;
+
+    // define the data structure of an Object in the pool
+    public  class ExistingPoolItem
+    {
+        public  GameObject gameObject;
+        public  ObjectType type;
+
+        // constructor
+        public  ExistingPoolItem(GameObject gameObject, ObjectType type){
+            // reference input
+            this.gameObject  =  gameObject;
+            this.type  =  type;
+        }
+    }
     
     // spawn all items for each ObjectPoolItem and put them inside pooledObjects List.
     void  Awake()
@@ -60,10 +79,7 @@ public class ObjectPooler : MonoBehaviour
     }
 }
 
-public  enum ObjectType{
-	gombaEnemy =  0,
-	greenEnemy =  1
-}
+
 
 // define the data structure of an Object METADATA to be spawned into the pool
 [System.Serializable]
@@ -75,16 +91,3 @@ public  class ObjectPoolItem
 	public  ObjectType type;
 }
 
-// define the data structure of an Object in the pool
-public  class ExistingPoolItem
-{
-	public  GameObject gameObject;
-	public  ObjectType type;
-
-	// constructor
-	public  ExistingPoolItem(GameObject gameObject, ObjectType type){
-		// reference input
-		this.gameObject  =  gameObject;
-		this.type  =  type;
-	}
-}

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3404991730436323511}
   - component: {fileID: 6147630010963774615}
   - component: {fileID: 812242393607624055}
-  - component: {fileID: 3939216465200871869}
   m_Layer: 0
   m_Name: Gomba
   m_TagString: Enemy
@@ -148,23 +147,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConstants: {fileID: 11400000, guid: 6fa88d922b915d74d8440c59c0dc3a04, type: 2}
---- !u!95 &3939216465200871869
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7030973711565256260}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 910d3dfd359273943bf58f094cb3570a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
