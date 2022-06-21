@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName =  "GameConstants", menuName =  "ScriptableObjects/GameConstants", order =  1)]
 public  class GameConstants : ScriptableObject
 {
+    public float groundDistance = 0.6f;
 
     public float maxOffset = 5.0f;
     public float enemyPatroltime = 2.0f;

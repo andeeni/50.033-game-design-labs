@@ -26,7 +26,7 @@ public  class OrangeMushroom : MonoBehaviour, ConsumableInterface
             // GetComponent<Collider2D>().enabled  =  false;
 
 			// here - try changing y
-			this.transform.position  =  new  Vector3(this.transform.position.x, -7, this.transform.position.z);
+			this.transform.position  =  new  Vector3(this.transform.position.x, 6, this.transform.position.z);
         	GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
         }
     }

@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
 	private  Rigidbody2D enemyBody;
 	private SpriteRenderer enemySprite;
 
+	private float heightScale;
+
 
     // Start is called before the first frame update
     void  Start()
@@ -28,6 +30,8 @@ public class EnemyController : MonoBehaviour
 		
 		// compute initial velocity
 		ComputeVelocity();
+
+		heightScale = this.transform.localScale.y;
 
         // subscribe to player event
         GameManager.OnPlayerDeath  +=  EnemyRejoice;    
@@ -47,7 +51,7 @@ public class EnemyController : MonoBehaviour
 
     void  OnTriggerEnter2D(Collider2D other){
 		// check if it collides with Mario
-		if (other.gameObject.tag  ==  "Player"){
+		/* if (other.gameObject.tag  ==  "Player"){
 			// check if collides on top
 			float yoffset = (other.transform.position.y  -  this.transform.position.y);
             //  check if the player’s y location is higher than the enemy’s (i.e Player is stomping the enemy from above)
@@ -57,6 +61,26 @@ public class EnemyController : MonoBehaviour
 			else{
 				// hurt player
                 CentralManager.centralManagerInstance.damagePlayer();
+			}
+		} */
+
+
+		if (other.gameObject.tag == "Tubes" || other.gameObject.tag == "Obsticles" )
+		{
+			moveRight *= 1;
+		}
+		// check if it collides with Mario
+		if (other.gameObject.tag == "Player")
+		{
+			// check if collides on top
+			float yoffset = (other.transform.position.y - this.transform.position.y);
+			if (yoffset > 0.75f)
+			{
+				KillSelf();
+			}
+			else
+			{
+				CentralManager.centralManagerInstance.damagePlayer();
 			}
 		}
 	}
@@ -69,7 +93,7 @@ public class EnemyController : MonoBehaviour
 	}
 
     IEnumerator  flatten(){
-		Debug.Log("Flatten starts");
+		/* Debug.Log("Flatten starts");
 		int steps =  5;
 		float stepper =  1.0f/(float) steps;
 
@@ -83,7 +107,32 @@ public class EnemyController : MonoBehaviour
 		Debug.Log("Flatten ends");
 		this.gameObject.SetActive(false);
 		Debug.Log("Enemy returned to pool");
-		yield  break;
+		yield  break; */
+
+
+		Debug.Log("Flatten starts");
+
+		int steps = 5;
+		float stepper = heightScale / (float)steps;
+
+		for (int i = 0; i < steps; i++)
+		{
+			this.transform.localScale = new Vector3(this.transform.localScale.x, (this.transform.localScale.y - stepper), this.transform.localScale.z);
+
+            //make sure enemy is still above ground
+
+            this.transform.position = new Vector3(
+                this.transform.position.x,
+                gameConstants.groundSurface + (GetComponent<SpriteRenderer>().bounds.extents.y),
+                0
+                );
+            yield return null;
+		}
+		Debug.Log("Flatten ends");
+		this.transform.localScale = new Vector3(this.transform.localScale.x, (heightScale), this.transform.localScale.z); ;
+		this.gameObject.SetActive(false);
+		Debug.Log("Enemy returned to pool");
+		yield break;
 	}
 
     // animation when player is dead
@@ -92,7 +141,11 @@ public class EnemyController : MonoBehaviour
         // do whatever you want here, animate etc
         // ...
 
-		gameConstants.enemyRejoice = true;
+		//gameConstants.enemyRejoice = true;
+
+
+		velocity = Vector3.zero;
+		GameManager.OnPlayerDeath -= EnemyRejoice;
 
     }
 
@@ -116,6 +169,7 @@ public class EnemyController : MonoBehaviour
 			MoveEnemy();
 		}
 	}
+	
 
 
     private void OnDestroy()
