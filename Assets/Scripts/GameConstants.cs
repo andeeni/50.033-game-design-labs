@@ -6,7 +6,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName =  "GameConstants", menuName =  "ScriptableObjects/GameConstants", order =  1)]
 public  class GameConstants : ScriptableObject
 {
-    public float groundDistance = 0.6f;
+    //lab 5
+    
+    // Mario basic starting values
+    public int playerStartingMaxSpeed = 25;
+    
+    public int playerMaxJumpSpeed = 30;
+    
+    public int playerDefaultForce = 150;
+
+    public  float groundDistance =  -4f;
+
+
+
+    //-----end of lab 5------
+
+
+    //public float groundDistance = 0.6f;
 
     public float maxOffset = 5.0f;
     public float enemyPatroltime = 2.0f;

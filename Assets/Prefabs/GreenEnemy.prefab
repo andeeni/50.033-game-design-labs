@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8228542106687874141}
   - component: {fileID: 2437019255676352896}
   - component: {fileID: 1879426425602905139}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GreenEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.49, y: 3.28}
+    oldSize: {x: 1.66, y: 2.1866667}
     newSize: {x: 2.49, y: 3.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -10,6 +10,7 @@ TagManager:
   - Obstacles
   - Mushroom
   - Tubes
+  - Door
   layers:
   - Default
   - TransparentFX
