@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6386314858589124712}
-  - component: {fileID: 6275774660017779634}
   m_Layer: 0
   m_Name: bouncybox
   m_TagString: Obstacles
@@ -34,23 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6275774660017779634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6386314858589124713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97ce3d738ea96849b8d03984baafe73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidBody: {fileID: 6386314858936006966}
-  springJoint: {fileID: 6386314858936006967}
-  consummablePrefab: {fileID: 4029728543088064192, guid: 2f540293558480a45a28b95b4f09eeca, type: 3}
-  spriteRenderer: {fileID: 6386314858936006952}
-  usedQuestionBox: {fileID: 21300054, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
 --- !u!1 &6386314858936006955
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +46,7 @@ GameObject:
   - component: {fileID: 6386314858936006953}
   - component: {fileID: 6386314858936006966}
   - component: {fileID: 6386314858936006967}
+  - component: {fileID: 4429682784169690599}
   m_Layer: 0
   m_Name: thebox
   m_TagString: Untagged
@@ -176,7 +159,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3a332bc86d1074d43a2fce4564dcefa0, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -200,7 +183,24 @@ SpringJoint2D:
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
   m_DampingRatio: 1
-  m_Frequency: 2
+  m_Frequency: 3
+--- !u!114 &4429682784169690599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6386314858936006955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97ce3d738ea96849b8d03984baafe73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidBody: {fileID: 6386314858936006966}
+  springJoint: {fileID: 6386314858936006967}
+  consummablePrefab: {fileID: 4029728543088064192, guid: 2f540293558480a45a28b95b4f09eeca, type: 3}
+  spriteRenderer: {fileID: 6386314858936006952}
+  usedQuestionBox: {fileID: 21300054, guid: 855dc7396df3c4e49ac4d21234eac5e1, type: 3}
 --- !u!1 &6386314859756432560
 GameObject:
   m_ObjectHideFlags: 0
